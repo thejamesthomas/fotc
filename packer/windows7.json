@@ -1,0 +1,39 @@
+{
+    "builders": [
+        {
+            "type": "virtualbox-iso",
+            "iso_url": "7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+            "iso_checksum_type": "md5",
+            "iso_checksum": "d5a30a47ad30f448da798afc7d85f8e0",
+            "communicator": "winrm",
+            "winrm_username": "Administrator",
+            "headless": false,
+            "boot_wait": "2m",
+            "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+            "guest_os_type": "Windows7_64",
+            "disk_size": 61440,
+            "vboxmanage": [
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--memory",
+                    "2048"
+                ],
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--cpus",
+                    "2"
+                ]
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "keep_input_artifact": false,
+            "output": "windows_7_{{.Provider}}.box",
+            "vagrantfile_template": "vagrantfile-windows_7.template"
+        }
+    ]
+}
