@@ -12,6 +12,9 @@
             "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
             "guest_os_type": "Windows7_64",
             "disk_size": 61440,
+            "floppy_files": [
+              "./Autounattend.xml"
+            ],
             "vboxmanage": [
                 [
                     "modifyvm",
