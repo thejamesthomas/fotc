@@ -4,16 +4,20 @@
             "type": "virtualbox-iso",
             "iso_url": "7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
             "iso_checksum_type": "md5",
-            "iso_checksum": "d5a30a47ad30f448da798afc7d85f8e0",
+            "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
+            "ssh_skip_nat_mapping": true,
             "communicator": "winrm",
-            "winrm_username": "Administrator",
+            "winrm_username": "vagrant",
+            "winrm_password": "vagrant",
+            "winrm_timeout": "30m",
             "headless": false,
             "boot_wait": "2m",
             "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
             "guest_os_type": "Windows7_64",
             "disk_size": 61440,
             "floppy_files": [
-              "./Autounattend.xml"
+              "./floppy/Autounattend.xml",
+              "./floppy/dis-updates.ps1"
             ],
             "vboxmanage": [
                 [
@@ -27,8 +31,20 @@
                     "{{.Name}}",
                     "--cpus",
                     "2"
+                ],
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--nic0",
+                    "hostonly"
                 ]
             ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "windows-shell",
+            "script": "./scripts/upgrade_powershell.bat"
         }
     ],
     "post-processors": [

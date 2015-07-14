@@ -2,3 +2,4 @@
 *.ISO
 *output-virtualbox-iso/
 node_modules/
+.DS_Store
